@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chris Harley Portfolio</title>
+<meta name="description" content="Chris T. Harley, IT automation and ETL developer. PowerShell, Python, REST and Microsoft Graph automation across Microsoft 365, Entra ID and SaaS platforms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: one ruled 1080px column; each piece of work is drawn as a job spec (trigger, reads, writes, reports), like a scheduled task's title block. */
+  --paper: #f1f3f5;
+  --surface: #ffffff;
+  --ink: #14171c;
+  --muted: #59606b;
+  --rule: #cfd5dc;
+  --accent: #2b3fd1;
+  --accent-tint: #e5e9fb;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1116; --surface: #151a21; --ink: #e9ecf0; --muted: #9ba4b0; --rule: #2a323d; --accent: #97a6ff; --accent-tint: #1b2242;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1116; --surface: #151a21; --ink: #e9ecf0; --muted: #9ba4b0; --rule: #2a323d; --accent: #97a6ff; --accent-tint: #1b2242;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 18px/1.58 var(--body);
+  font-optical-sizing: auto;
+}
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Masthead */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  font: 500 12.5px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.masthead .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 16px; padding-bottom: 16px; flex-wrap: wrap; }
+.masthead nav { display: flex; gap: 20px; }
+.masthead a { color: var(--ink); text-decoration: none; }
+.masthead a:hover { color: var(--accent); }
+
+/* Hero */
+.hero { padding: 56px 0 40px; }
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: clamp(2.7rem, 7.4vw, 5.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+  max-width: 15ch;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.lede { margin: 28px 0 0; max-width: 62ch; font-size: 1.17rem; color: var(--ink); }
+.status {
+  margin-top: 28px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;
+  font: 400 15px/1.4 var(--mono);
+}
+.status .open { color: var(--muted); }
+.contact-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.btn {
+  font: 500 14px/1 var(--mono);
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn.primary:hover { filter: brightness(1.08); background: var(--accent); color: var(--surface); }
+.addr { font: 400 14.5px/1 var(--mono); color: var(--ink); }
+
+/* Ledger of results */
+.ledger {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule);
+  margin: 8px 0 0;
+}
+.ledger div { padding: 18px 18px 20px; border-left: 1px solid var(--rule); }
+.ledger div:first-child { border-left: 0; padding-left: 0; }
+.ledger b {
+  display: block;
+  font: 800 2.6rem/1 var(--display); font-stretch: 75%;
+  font-variant-numeric: tabular-nums;
+}
+.ledger span { display: block; margin-top: 8px; font: 500 12px/1.35 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.ledger p { margin: 8px 0 0; font-size: 15px; line-height: 1.45; color: var(--muted); }
+
+/* Sections */
+section.block { padding: 64px 0 8px; }
+.eyebrow { font: 500 12.5px/1.3 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+h2 {
+  margin: 0;
+  font: 700 2.3rem/1.05 var(--display); font-stretch: 75%;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.intro { margin: 14px 0 0; max-width: 62ch; color: var(--muted); }
+
+/* Job cards */
+.jobs { display: grid; gap: 28px; margin-top: 32px; }
+.job { background: var(--surface); border: 1px solid var(--rule); border-top: 3px solid var(--ink); }
+.job-head { padding: 22px 24px 18px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: baseline; }
+.job-no { font: 600 12.5px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+.job h3 { margin: 0; font: 700 1.75rem/1.1 var(--display); font-stretch: 78%; text-wrap: balance; }
+.job-sum { grid-column: 2; margin: 4px 0 0; color: var(--muted); max-width: 64ch; }
+.spec { margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.spec div { padding: 12px 16px 14px; border-left: 1px solid var(--rule); }
+.spec div:first-child { border-left: 0; padding-left: 24px; }
+.spec dt { font: 600 11.5px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.spec dd { margin: 7px 0 0; font: 400 14.5px/1.4 var(--mono); }
+.job-body { padding: 18px 24px 22px; display: grid; gap: 14px; }
+.job-body p { margin: 0; max-width: 70ch; }
+.lbl { font: 600 11.5px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-right: 10px; }
+.job-body ul.built { margin: 0; padding: 0 0 0 20px; display: grid; gap: 6px; max-width: 72ch; }
+.job-body ul.built li::marker { color: var(--accent); }
+.result { padding: 12px 14px; background: var(--accent-tint); border-left: 3px solid var(--accent); }
+.result .lbl { color: var(--accent); }
+.stack { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.stack li { font: 400 13px/1 var(--mono); padding: 6px 9px; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink); }
+@media (min-width: 861px) {
+  .job-body { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+  .job-body > p:first-child { grid-column: 1; grid-row: 1; }
+  .job-body > ul.built { grid-column: 1; grid-row: 2; }
+  .job-body > .result { grid-column: 2; grid-row: 1; }
+  .job-body > ul.stack { grid-column: 2; grid-row: 2; }
+}
+
+/* Earlier wins */
+.wins { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+.wins li { display: grid; grid-template-columns: 170px 1fr; gap: 6px 24px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+.wins .when { font: 500 13.5px/1.5 var(--mono); color: var(--muted); }
+.wins .role { display: block; font: 700 1.15rem/1.25 var(--display); font-stretch: 85%; color: var(--ink); margin-bottom: 4px; }
+.wins p { margin: 0; max-width: 70ch; }
+
+/* Personal projects */
+.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 40px; margin-top: 28px; border-top: 1px solid var(--rule); }
+.project { padding: 20px 0 22px; border-bottom: 1px solid var(--rule); }
+.project h3 { margin: 0; font: 700 1.35rem/1.15 var(--display); font-stretch: 80%; }
+.project .tech { margin: 6px 0 8px; font: 400 13px/1.4 var(--mono); color: var(--accent); }
+.project p { margin: 0; }
+.project.wide { grid-column: 1 / -1; }
+.project h3 a { color: var(--ink); text-decoration-color: var(--accent); }
+.project h3 a:hover { color: var(--accent); }
+.project ul.tools { margin: 0; padding: 0 0 0 20px; display: grid; gap: 6px; max-width: 80ch; }
+.project ul.tools li::marker { color: var(--accent); }
+
+/* Toolkit */
+.toolkit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; margin: 28px 0 0; }
+.toolkit div { padding: 16px 0; border-top: 1px solid var(--rule); }
+.toolkit dt { font: 600 11.5px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.toolkit dd { margin: 8px 0 0; font-size: 16.5px; line-height: 1.45; }
+
+/* Career */
+.career { margin: 28px 0 0; padding: 0; list-style: none; display: grid; gap: 0; border-top: 2px solid var(--ink); }
+.career li { display: grid; grid-template-columns: 130px 1fr; gap: 4px 24px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.career .yrs { font: 500 14px/1.5 var(--mono); font-variant-numeric: tabular-nums; color: var(--muted); }
+.career .org { color: var(--muted); }
+
+/* Footer */
+footer { margin-top: 72px; border-top: 2px solid var(--ink); }
+footer .wrap { padding-top: 28px; padding-bottom: 48px; display: grid; grid-template-columns: 1fr auto; gap: 20px 32px; align-items: end; }
+footer h2 { font-size: 2rem; }
+footer p { margin: 10px 0 0; color: var(--muted); max-width: 60ch; }
+footer .small { font: 400 12.5px/1.5 var(--mono); color: var(--muted); }
+
+@media (max-width: 860px) {
+  .ledger { grid-template-columns: repeat(2, 1fr); }
+  .ledger div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .ledger div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .spec { grid-template-columns: repeat(2, 1fr); }
+  .spec div:nth-child(3) { border-left: 0; padding-left: 24px; }
+  .spec div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .projects { grid-template-columns: 1fr; }
+  .toolkit { grid-template-columns: repeat(2, 1fr); }
+  footer .wrap { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  body { font-size: 17px; }
+  .wrap { padding: 0 16px; }
+  .hero { padding: 40px 0 32px; }
+  .ledger b { font-size: 2.2rem; }
+  .ledger div { padding: 14px 12px 16px; }
+  .ledger div:nth-child(odd) { padding-left: 0; }
+  .job-head { grid-template-columns: 1fr; padding: 18px 16px 14px; }
+  .job-sum { grid-column: 1; }
+  .spec { grid-template-columns: 1fr; }
+  .spec div, .spec div:first-child, .spec div:nth-child(3) { border-left: 0; padding-left: 16px; }
+  .spec div:nth-child(n+2) { border-top: 1px solid var(--rule); }
+  .job-body { padding: 16px 16px 18px; }
+  .wins li, .career li { grid-template-columns: 1fr; }
+  .toolkit { grid-template-columns: 1fr; }
+  h2 { font-size: 2rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .masthead a { transition: background-color .15s ease, color .15s ease, filter .15s ease; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <span>Chris T. Harley</span>
+    <nav aria-label="Contact">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" aria-labelledby="headline">
+      <h1 id="headline">I automate the work nobody should be doing <em>by hand.</em></h1>
+      <p class="lede">IT automation and ETL developer with 15+ years in IT, most of them at Shaw Communications, now part of Rogers. I build PowerShell and Python jobs on REST and Microsoft Graph APIs that keep Microsoft 365, Entra ID and SaaS platforms in step, and report on every run.</p>
+      <div class="status">
+        <span class="open">Looking for automation, integration and Microsoft 365 roles. Remote, or on-site in Nanaimo, BC.</span>
+      </div>
+      <div class="status contact-line">
+        <a class="btn primary" href="mailto:kurisu620@gmail.com">Email me</a>
+        <span class="addr" id="email-text">kurisu620@gmail.com</span>
+        <button class="btn" type="button" id="copy-email">Copy address</button>
+        <a class="btn" href="https://github.com/kurisu620">GitHub</a>
+      </div>
+    </section>
+
+    <div class="ledger" role="list" aria-label="Results">
+      <div role="listitem"><b>15+</b><span>Years in IT</span><p>Support, operations, automation and ETL.</p></div>
+      <div role="listitem"><b>~50%</b><span>Faster escalations</span><p>From 60+ minutes to about 30.</p></div>
+      <div role="listitem"><b>100s</b><span>Hours saved a week</span><p>For content teams, and thousands during mass-edit projects.</p></div>
+      <div role="listitem"><b>40+</b><span>Enterprise apps</span><p>Administered and automated as primary on-call.</p></div>
+    </div>
+
+    <section class="block" id="work" aria-labelledby="work-title">
+      <p class="eyebrow">Shaw Communications, 2018–2024</p>
+      <h2 id="work-title">Four jobs I built</h2>
+      <p class="intro">The code belongs to my former employer, so these are write-ups rather than repositories. Internal names and details are left out on purpose.</p>
+
+      <div class="jobs">
+        <article class="job" id="identity-sync" aria-labelledby="job1">
+          <div class="job-head">
+            <span class="job-no">Job 01</span>
+            <h3 id="job1">Directory-to-intranet identity sync</h3>
+            <p class="job-sum">Kept profiles and group access on a company-wide intranet platform in step with the corporate directory, every night.</p>
+          </div>
+          <dl class="spec">
+            <div><dt>Trigger</dt><dd>Nightly</dd></div>
+            <div><dt>Reads</dt><dd>Active Directory, identity database, rules list</dd></div>
+            <div><dt>Writes</dt><dd>User profiles and group memberships</dd></div>
+            <div><dt>Reports</dt><dd>Email summary of every change and failure</dd></div>
+          </dl>
+          <div class="job-body">
+            <p><span class="lbl">Why</span>The platform vendor's own identity integration failed security review, so profiles and access had to come from the directory another way.</p>
+            <ul class="built">
+              <li>Maps each person's directory attributes into the platform's user format and updates their profile through its REST API.</li>
+              <li>Sets group membership from rules: a leader's direct reports, departments, companies, contractor filters and leadership levels by job title.</li>
+              <li>Keeps the rules in a SharePoint list instead of the code, so adding a group means adding a row.</li>
+              <li>Logs every addition, removal and failure, and emails a summary after each run.</li>
+            </ul>
+            <p class="result"><span class="lbl">Result</span>A fully compliant replacement, delivered on schedule.</p>
+            <ul class="stack" aria-label="Tools used"><li>PowerShell</li><li>REST</li><li>OAuth 2.0</li><li>Active Directory</li><li>SQL</li><li>SharePoint</li><li>Bitbucket</li></ul>
+          </div>
+        </article>
+
+        <article class="job" id="bulk-content" aria-labelledby="job2">
+          <div class="job-head">
+            <span class="job-no">Job 02</span>
+            <h3 id="job2">Bulk content operations</h3>
+            <p class="job-sum">Turned rebrands and clean-ups that teams did page by page into list-driven bulk jobs.</p>
+          </div>
+          <dl class="spec">
+            <div><dt>Trigger</dt><dd>On demand</dd></div>
+            <div><dt>Reads</dt><dd>Keyword and exclusion lists (CSV), platform content</dd></div>
+            <div><dt>Writes</dt><dd>Documents, comments, archives</dd></div>
+            <div><dt>Reports</dt><dd>Live progress and a CSV log of changes</dd></div>
+          </dl>
+          <div class="job-body">
+            <p><span class="lbl">Why</span>Content teams were making rebrand and clean-up edits by hand, one page at a time.</p>
+            <ul class="built">
+              <li>A reusable PowerShell module for the platform's REST API, with OAuth 2.0 token refresh, paging and consistent error handling.</li>
+              <li>Find-and-replace across documents and comments from keyword lists, with exclusion lists and safe handling of Unicode and embedded HTML.</li>
+              <li>Jobs to archive, copy and upload content in bulk.</li>
+            </ul>
+            <p class="result"><span class="lbl">Result</span>Saved content teams hundreds of hours a week, and thousands during mass-edit projects.</p>
+            <ul class="stack" aria-label="Tools used"><li>PowerShell</li><li>REST</li><li>OAuth 2.0</li><li>JSON</li><li>HTML</li><li>CSV</li></ul>
+          </div>
+        </article>
+
+        <article class="job" id="outage-watchdog" aria-labelledby="job3">
+          <div class="job-head">
+            <span class="job-no">Job 03</span>
+            <h3 id="job3">Outage watchdog</h3>
+            <p class="job-sum">Flagged intranet outages within about a minute and recorded how long each one lasted.</p>
+          </div>
+          <dl class="spec">
+            <div><dt>Trigger</dt><dd>Every 60 seconds</dd></div>
+            <div><dt>Reads</dt><dd>Site status, sign-in and page-load time</dd></div>
+            <div><dt>Writes</dt><dd>Outage and load-time logs (CSV)</dd></div>
+            <div><dt>Reports</dt><dd>Email alert, then hourly until it recovers</dd></div>
+          </dl>
+          <div class="job-body">
+            <p><span class="lbl">Why</span>Support needed to hear about an outage as soon as it started, and to have a record of every one.</p>
+            <ul class="built">
+              <li>Checks the site every 60 seconds and records when an outage starts and the error it returned.</li>
+              <li>Emails the support team after one minute down, then every hour until the site is back.</li>
+              <li>On recovery, closes the alert and logs total downtime for post-incident reports.</li>
+              <li>A companion probe signs in and times the page load, logging each result.</li>
+            </ul>
+            <p class="result"><span class="lbl">Result</span>Every outage flagged within about a minute, with its duration on record.</p>
+            <ul class="stack" aria-label="Tools used"><li>PowerShell</li><li>HTTP checks</li><li>SMTP alerts</li><li>CSV logging</li></ul>
+          </div>
+        </article>
+
+        <article class="job" id="m365-pipelines" aria-labelledby="job4">
+          <div class="job-head">
+            <span class="job-no">Job 04</span>
+            <h3 id="job4">Microsoft 365 data pipelines and audits</h3>
+            <p class="job-sum">Kept SharePoint lists, Teams and Azure AD groups in step with their sources, and reported on the tenant.</p>
+          </div>
+          <dl class="spec">
+            <div><dt>Trigger</dt><dd>File drops and on demand</dd></div>
+            <div><dt>Reads</dt><dd>ERP exports, distribution lists, Microsoft Graph</dd></div>
+            <div><dt>Writes</dt><dd>SharePoint lists, Teams and group membership</dd></div>
+            <div><dt>Reports</dt><dd>Emailed run reports, CSV audits</dd></div>
+          </dl>
+          <div class="job-body">
+            <p><span class="lbl">Why</span>Reporting and data upkeep across Microsoft 365 needed to run the same way every time.</p>
+            <ul class="built">
+              <li>A Microsoft Graph wrapper shared across jobs, with v1 and beta endpoints, automatic paging and token refresh.</li>
+              <li>An ETL job that loads ERP exports into a SharePoint list. It removes duplicates (keeping the newest), matches records by key, and creates or updates only what's needed.</li>
+              <li>Membership sync that keeps Teams and Azure AD groups in step with distribution lists, reporting lines and office location.</li>
+              <li>Tenant audits: license use with readable SKU names, site permissions with back-off when the API throttles, and Power Platform app and flow owners.</li>
+            </ul>
+            <p class="result"><span class="lbl">Result</span>Streamlined enterprise reporting, data management and identity workflows.</p>
+            <ul class="stack" aria-label="Tools used"><li>PowerShell</li><li>Microsoft Graph</li><li>SharePoint Online</li><li>Teams</li><li>Entra ID</li><li>Power BI</li><li>Power Platform</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="earlier" aria-labelledby="earlier-title">
+      <p class="eyebrow">Shaw Communications, 2009–2018</p>
+      <h2 id="earlier-title">Earlier wins</h2>
+      <ul class="wins">
+        <li><span class="when">2016–2018</span><div><span class="role">Customer Care Operations Support</span><p>Automated outage escalations, often raised within about 30 minutes, before frontline teams had opened a ticket.</p></div></li>
+        <li><span class="when">2012–2015</span><div><span class="role">Realtime Support</span><p>Co-designed an escalation page that standardized outage intake and cut escalation time from 60+ minutes to about 30.</p></div></li>
+        <li><span class="when">2009–2012</span><div><span class="role">Technical Support</span><p>Traced an event-night "black screen" defect behind about 90% of inbound calls, then drove a 30-second self-serve phone fix and a permanent upstream fix.</p></div></li>
+      </ul>
+    </section>
+
+    <section class="block" id="projects" aria-labelledby="projects-title">
+      <p class="eyebrow">On my own time</p>
+      <h2 id="projects-title">Personal projects</h2>
+      <p class="intro">The home lab scripts are public on GitHub. The others aren't published yet.</p>
+      <div class="projects">
+        <div class="project wide">
+          <h3><a href="https://github.com/kurisu620/CompletedProjects">Home lab automation scripts</a></h3>
+          <p class="tech">Python · PowerShell · ffmpeg · Twitch API · public repo</p>
+          <ul class="tools">
+            <li><b>Media re-encoder.</b> Shrinks a video library to HEVC. It resumes after a crash from a CSV ledger, retries the intermittent ffmpeg crashes, and replaces an original only after its copy checks out.</li>
+            <li><b>Download watchdog.</b> Polls a download server's API, spots jobs that have stalled, and hands them back for an automatic retry.</li>
+            <li><b>Stream notifier.</b> Watches a list of games through the Twitch API and sends a desktop alert when new streams start. Its credentials are stored encrypted, never in the script.</li>
+          </ul>
+        </div>
+        <div class="project">
+          <h3>Job-posting pipeline</h3>
+          <p class="tech">Python · REST APIs · Claude API</p>
+          <p>Queries applicant-tracking-system APIs for remote and Nanaimo IT roles, respects robots.txt, and can score each posting's fit.</p>
+        </div>
+        <div class="project">
+          <h3>Proton Doctor</h3>
+          <p class="tech">Python · PySide6 · Linux</p>
+          <p>A local-first desktop app that diagnoses Steam and Proton game problems on Linux, refined through lots of real-world testing.</p>
+        </div>
+        <div class="project">
+          <h3>Alexandria</h3>
+          <p class="tech">Local LLM · Ollama</p>
+          <p>A staged pipeline that processes ebooks from scene segmentation through delivery, using a self-hosted language model.</p>
+        </div>
+        <div class="project">
+          <h3>Bus Crawler</h3>
+          <p class="tech">Python · Git</p>
+          <p>A roguelike written 10 to 15 minutes a day on the bus, on an Android phone, and kept in sync with two PCs through Git.</p>
+        </div>
+        <div class="project">
+          <h3>Linux homelab</h3>
+          <p class="tech">Ubuntu Server · Kubuntu · systemd · Bash</p>
+          <p>Runs storage and streaming. Diagnosed a GPU link-width anomaly, fixed an HDMI audio sleep bug with a systemd user service, and traced a copy script's failures to a cache flush mid-transfer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="toolkit" aria-labelledby="toolkit-title">
+      <p class="eyebrow">What I work with</p>
+      <h2 id="toolkit-title">Toolkit</h2>
+      <dl class="toolkit">
+        <div><dt>Automation</dt><dd>PowerShell, Python, Bash, scheduled jobs, ETL</dd></div>
+        <div><dt>APIs</dt><dd>REST, Microsoft Graph, OAuth 2.0</dd></div>
+        <div><dt>Platforms</dt><dd>Microsoft 365, Entra ID, Active Directory, SharePoint Online, Teams, ServiceNow</dd></div>
+        <div><dt>Systems</dt><dd>RHEL 5–8, Ubuntu Server, Windows</dd></div>
+        <div><dt>Operations</dt><dd>Incident, problem and change; root cause analysis; on-call; post-incident reports</dd></div>
+        <div><dt>Delivery</dt><dd>Git, Bitbucket, Jira, Agile sprints; ITIL 4 Foundation (renewal in progress)</dd></div>
+      </dl>
+    </section>
+
+    <section class="block" id="career" aria-labelledby="career-title">
+      <p class="eyebrow">Shaw Communications, now part of Rogers</p>
+      <h2 id="career-title">Career</h2>
+      <ul class="career">
+        <li><span class="yrs">2024</span><span>ETL Developer</span></li>
+        <li><span class="yrs">2018–2024</span><span>Support Analyst</span></li>
+        <li><span class="yrs">2016–2018</span><span>Customer Care Operations Support</span></li>
+        <li><span class="yrs">2015–2016</span><span>eCare Support</span></li>
+        <li><span class="yrs">2012–2015</span><span>Realtime Support</span></li>
+        <li><span class="yrs">2009–2012</span><span>Technical Support Representative</span></li>
+        <li><span class="yrs">2005–2009</span><span>Customer Service Supervisor and IT Desktop Support <span class="org">(before Shaw)</span></span></li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let's talk automation</h2>
+      <p>Email <a href="mailto:kurisu620@gmail.com">kurisu620@gmail.com</a> or find my code on <a href="https://github.com/kurisu620">GitHub</a>. Based in Nanaimo, BC and open to remote work.</p>
+    </div>
+    <p class="small">Updated November 2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-email');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var done = function (text) {
+      btn.textContent = text;
+      setTimeout(function () { btn.textContent = 'Copy address'; }, 1800);
+    };
+    try {
+      navigator.clipboard.writeText('kurisu620@gmail.com').then(function () { done('Copied'); }, function () { done('Select it to copy'); });
+    } catch (e) { done('Select it to copy'); }
+  });
+})();
+</script>
+</body>
+</html>
